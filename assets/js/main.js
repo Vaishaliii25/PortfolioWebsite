@@ -132,32 +132,77 @@ function scrollUp(){
 window.addEventListener('scroll', scrollUp)
 
 
+// /*==================== DARK LIGHT THEME ====================*/ 
+// const themeButton = document.getElementById('theme-button')
+// const darkTheme = 'dark-theme'
+// const iconTheme = 'uil-sun'
+
+// // Previously selected topic (if user selected)
+// const selectedTheme = localStorage.getItem('selected-theme')
+// const selectedIcon = localStorage.getItem('selected-icon')
+
+// // We obtain the current theme that the interface has by validating the dark-theme class
+// const getCurrentTheme = () => document.body.classList.contains(darkTheme) ? 'dark' : 'light'
+// const getCurrentIcon = () => themeButton.classList.contains(iconTheme) ? 'uil-moon' : 'uil-sun'
+
+// // We validate if the user previously chose a topic
+// if (selectedTheme) {
+//   // If the validation is fulfilled, we ask what the issue was to know if we activated or deactivated the dark
+//   document.body.classList[selectedTheme === 'dark' ? 'add' : 'remove'](darkTheme)
+//   themeButton.classList[selectedIcon === 'uil-moon' ? 'add' : 'remove'](iconTheme)
+// }
+
+// // Activate / deactivate the theme manually with the button
+// themeButton.addEventListener('click', () => {
+//     // Add or remove the dark / icon theme
+//     document.body.classList.toggle(darkTheme)
+//     themeButton.classList.toggle(iconTheme)
+//     // We save the theme and the current icon that the user chose
+//     localStorage.setItem('selected-theme', getCurrentTheme())
+//     localStorage.setItem('selected-icon', getCurrentIcon())
+// })
 /*==================== DARK LIGHT THEME ====================*/ 
-const themeButton = document.getElementById('theme-button')
-const darkTheme = 'dark-theme'
-const iconTheme = 'uil-sun'
+/*==================== DARK LIGHT THEME ====================*/ 
+const themeButton = document.getElementById('theme-button');
+const darkTheme = 'dark-theme';
+const iconTheme = 'uil-sun';
 
-// Previously selected topic (if user selected)
-const selectedTheme = localStorage.getItem('selected-theme')
-const selectedIcon = localStorage.getItem('selected-icon')
-
-// We obtain the current theme that the interface has by validating the dark-theme class
-const getCurrentTheme = () => document.body.classList.contains(darkTheme) ? 'dark' : 'light'
-const getCurrentIcon = () => themeButton.classList.contains(iconTheme) ? 'uil-moon' : 'uil-sun'
-
-// We validate if the user previously chose a topic
-if (selectedTheme) {
-  // If the validation is fulfilled, we ask what the issue was to know if we activated or deactivated the dark
-  document.body.classList[selectedTheme === 'dark' ? 'add' : 'remove'](darkTheme)
-  themeButton.classList[selectedIcon === 'uil-moon' ? 'add' : 'remove'](iconTheme)
+// Function to set dark theme
+const setDarkTheme = () => {
+    document.body.classList.add(darkTheme);
+    themeButton.classList.remove(iconTheme);
+    themeButton.classList.add('uil-moon');
 }
+
+// Function to set light theme
+const setLightTheme = () => {
+    document.body.classList.remove(darkTheme);
+    themeButton.classList.remove('uil-moon');
+    themeButton.classList.add(iconTheme);
+}
+
+// Apply dark theme by default
+setDarkTheme();
 
 // Activate / deactivate the theme manually with the button
 themeButton.addEventListener('click', () => {
-    // Add or remove the dark / icon theme
-    document.body.classList.toggle(darkTheme)
-    themeButton.classList.toggle(iconTheme)
-    // We save the theme and the current icon that the user chose
-    localStorage.setItem('selected-theme', getCurrentTheme())
-    localStorage.setItem('selected-icon', getCurrentIcon())
-})
+    // Toggle theme
+    if (document.body.classList.contains(darkTheme)) {
+        setLightTheme();
+    } else {
+        setDarkTheme();
+    }
+
+    // Save selected theme to local storage
+    const selectedTheme = document.body.classList.contains(darkTheme) ? 'dark' : 'light';
+    localStorage.setItem('selected-theme', selectedTheme);
+});
+
+// Check local storage for previously selected theme
+const selectedTheme = localStorage.getItem('selected-theme');
+
+// If light theme was previously selected, switch to it
+if (selectedTheme === 'light') {
+    setLightTheme();
+}
+
